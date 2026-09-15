@@ -1,0 +1,59 @@
+.kalkulator{width:100%;overflow:hidden;background:#fff}
+.calc-page{width:100%}
+@media(max-width:700px){.calc-page{zoom:.24}}
+.calc-hero{position:relative;height:824px;background:url('/assets/calc-hero.png') center/cover}
+.ch-shade{position:absolute;inset:0;background:#2c7efb;opacity:.7;backdrop-filter:blur(6.9px)}
+.calc-hero h1{position:absolute;left:120px;top:215px;width:851px;margin:0;color:#fff;font-size:96px;font-weight:700}
+.calc-hero p{position:absolute;left:134px;top:487px;width:586px;margin:0;color:#fff;font-size:24px;font-weight:500}
+.calc-forms{display:flex;gap:25px;width:1200px;margin:70px auto 0;align-items:stretch}
+.cf-card{flex:1;min-width:0;background:#fff;border:1px solid #2c7efb;border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:21px}
+.cf-card.side{justify-content:space-between}
+.cf-badge{align-self:flex-start;background:#125bbd;color:#fff;font-weight:600;font-size:12px;padding:14px 21px;border-radius:28px;white-space:nowrap}
+.cf-fields{display:flex;flex-direction:column;gap:7px;width:100%}
+.cf-row{display:flex;gap:20px;align-items:center}
+.cf-row>img{width:24px;height:24px;flex:none}
+.cf-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.cf-field>label{font-size:12px;font-weight:700;color:#021d46}
+.cf-inputs{display:flex;gap:4px}
+.cf-input{flex:1;min-width:0;height:29px;border:1px solid #2c7efb;border-radius:7px;padding:7px 10px;background:#fff;color:#2c7efb;font:600 10px 'Plus Jakarta Sans',sans-serif}
+.cf-unit{flex:none;display:flex;align-items:center;background:#fff;border:1px solid #2c7efb;border-radius:7px;padding:7px 10px;color:#2c7efb;font-weight:600;font-size:10px;white-space:nowrap}
+.cf-tabs{display:flex;gap:20px}
+.cf-tab{flex:1;min-width:0;height:29px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #2c7efb;border-radius:7px;padding:7px 10px;color:#2c7efb;font:600 10px 'Plus Jakarta Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.cf-tab.on{background:#2c7efb;color:#fff}
+.cf-prod{display:flex;align-items:center;gap:20px;padding:4px 0;width:100%}
+.cf-flask{width:24px;height:24px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:none}
+.cf-flask img{width:24px;height:17.2px;display:block}
+.cf-prow{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cf-prow span{font-weight:700;font-size:14px;color:#2c7efb;white-space:nowrap}
+.cf-dose{width:223px;flex:none;height:29px;border:1px solid #2c7efb;border-radius:7px;padding:7px 10px;background:#fff;color:#2c7efb;font:600 12px 'Plus Jakarta Sans',sans-serif;text-align:right}
+.cf-submit{width:100%;height:46px;background:#2c7efb;border:0;border-radius:14px;color:#fff;font-family:inherit;font-weight:700;font-size:14px;box-shadow:0 4px 10px rgba(16,8,127,.26);cursor:pointer}
+.calc-radar{width:1200px;margin:52px auto 0;background:#fff;border:4px solid #edf0ff;border-radius:14px;padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:30px}
+.calc-radar>h2{margin:0;font-size:40px;font-weight:600;color:#021d46;white-space:nowrap}
+.radar-legend{display:flex;gap:40px;font-size:16px;font-weight:600;color:#021d46}
+.rl{display:flex;align-items:center;gap:8px}
+.dot-protek,.dot-other{width:14px;height:14px;border-radius:50%;display:inline-block}
+.dot-protek{background:#125bbd}
+.dot-other{background:#f07c1d}
+.radar-scale{position:relative;width:100%;height:555px;overflow:visible}
+.radar{position:absolute;top:0;left:50%;margin-left:-580px;width:1160px;height:793px;transform:scale(.7);transform-origin:top center}
+.radar-svg{position:absolute;left:188px;top:45px;width:772px;height:702.5px}
+.rlabel{position:absolute;margin:0;font-weight:700;font-size:24px;line-height:35px;color:#2c7efb;white-space:nowrap}
+.calc-table{width:1200px;margin:58px auto 0;background:#fff;border:3px solid #edf0ff;border-radius:21px;overflow:hidden;box-shadow:0 4px 20px rgba(44,11,0,.08)}
+.ct-title{height:82px;display:flex;align-items:center;justify-content:center}
+.ct-title h2{margin:0;font-size:24px;font-weight:700;color:#083b7f;white-space:nowrap}
+.ct-grid{display:grid;grid-template-columns:329px 329px 329px 1fr;padding:0 2px}
+.ct-col{display:flex;flex-direction:column;min-width:0}
+.ct-h{background:#2c7efb;color:#fff;font-weight:700;font-size:16px;padding:20px;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap}
+.ct-col:nth-child(-n+3) .ct-h{border-right:1px solid #125bbd}
+.ct-c{flex:none;height:49px;display:flex;align-items:center;gap:20px;padding:4px 20px;background:#fff;border:1px solid #2c7efb;font-weight:700;font-size:14px;color:#2c7efb;white-space:nowrap}
+.ct-col:not(:first-child) .ct-c{border-left:0}
+.ct-c:last-of-type{border-bottom:0}
+.ct-sel{flex-direction:column;align-items:flex-start;justify-content:center;gap:5px}
+.ct-sel b{font-weight:700;font-size:14px;color:#2c7efb;line-height:normal}
+.ct-sel small{font-weight:600;font-size:12px;color:#021d46;line-height:normal}
+.calc-cta{position:relative;width:1200px;margin:52px auto 0;border-radius:21px;padding:106px 40px;display:flex;align-items:center;gap:200px;background:#2c7efb;overflow:hidden}
+.calc-cta>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2}
+.cta-text{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;color:#fff}
+.cta-text h2{margin:0;font-size:32px;font-weight:700}
+.cta-text p{margin:0;font-size:16px;font-weight:700}
+.cta-btn{position:relative;flex:none;background:#fff;color:#083b7f;border:0;border-radius:14px;padding:21px 50px;font-family:inherit;font-weight:600;font-size:20px;box-shadow:0 4px 10px rgba(16,8,127,.26);cursor:pointer;white-space:nowrap}
