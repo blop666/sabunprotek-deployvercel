@@ -1,0 +1,70 @@
+.blog-detail{width:100%;overflow:hidden;background:#fff;font-family:'Plus Jakarta Sans',sans-serif}
+
+/* Hero Banner Section */
+.bd-hero{position:relative;background-size:cover;background-position:center;min-height:500px;display:flex;align-items:center;justify-content:center;padding:140px 20px 80px}
+.bd-hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(44,126,251,.92) 0%,rgba(30,93,217,.92) 100%);z-index:1}
+.bd-hero-content{position:relative;z-index:2;max-width:900px;text-align:center;color:#fff}
+
+/* Tombol Kembali di Hero */
+.bd-back{position:absolute;top:100px;left:20px;z-index:10;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);border-radius:50px;padding:10px 20px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;gap:8px;font-family:inherit}
+.bd-back:hover{background:rgba(255,255,255,.25);transform:translateX(-4px)}
+.bd-back svg{flex:none}
+
+/* Badge Kategori di Hero */
+.bd-hero-category{display:inline-block;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:30px;letter-spacing:.8px;margin-bottom:24px}
+
+/* Judul & Excerpt di Hero */
+.bd-hero h1{margin:0 0 20px;font-size:48px;font-weight:800;line-height:1.2;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.1)}
+.bd-hero-excerpt{margin:0 0 30px;font-size:20px;font-weight:400;line-height:1.6;color:#fff;opacity:.95}
+
+/* Meta Info di Hero */
+.bd-hero-meta{display:flex;gap:24px;align-items:center;justify-content:center}
+.bd-date,.bd-time{display:flex;align-items:center;gap:8px;font-size:15px;color:#fff;font-weight:500;opacity:.9}
+
+/* Content Section */
+.bd-content{max-width:800px;margin:0 auto;padding:60px 20px 80px;background:#fff}
+
+/* Artikel */
+.bd-article{background:#fff;border-radius:20px;padding:50px;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+
+.bd-article p{margin:0 0 20px;font-size:17px;line-height:1.8;color:#3d4f6a}
+.bd-article p:last-child{margin-bottom:0}
+
+.bd-article h2{margin:40px 0 20px;font-size:32px;font-weight:700;color:#021d46;line-height:1.3}
+.bd-article h2:first-child{margin-top:0}
+
+.bd-article h3{margin:32px 0 16px;font-size:24px;font-weight:700;color:#021d46;line-height:1.3}
+
+.bd-article ul,.bd-article ol{margin:0 0 20px;padding-left:24px}
+.bd-article li{margin-bottom:12px;font-size:17px;line-height:1.8;color:#3d4f6a}
+
+.bd-article strong{color:#021d46;font-weight:700}
+
+.bd-article a{color:#2C7EFB;text-decoration:underline;transition:color .2s ease}
+.bd-article a:hover{color:#1e5dd9}
+
+.bd-article img{max-width:100%;height:auto;border-radius:12px;margin:30px 0;display:block}
+
+.bd-article blockquote{margin:30px 0;padding:20px 30px;background:#EDF0FF;border-left:4px solid #2C7EFB;border-radius:8px;font-style:italic;color:#3d4f6a}
+
+/* Footer dengan Tombol Kembali */
+.bd-footer{margin-top:50px;text-align:center}
+.bd-back-btn{background:#2C7EFB;border:0;border-radius:50px;padding:14px 32px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s ease;display:inline-flex;align-items:center;gap:10px;font-family:inherit;box-shadow:0 4px 12px rgba(44,126,251,.25)}
+.bd-back-btn:hover{background:#1e5dd9;transform:translateX(-4px);box-shadow:0 6px 20px rgba(44,126,251,.35)}
+.bd-back-btn svg{flex:none;transition:transform .3s ease}
+.bd-back-btn:hover svg{transform:translateX(-4px)}
+
+/* Loading State */
+.bd-loading{min-height:60vh;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5a6b85}
+
+/* Responsive */
+@media(max-width:768px){
+  .bd-hero{min-height:400px;padding:100px 20px 60px}
+  .bd-back{top:80px;left:16px;padding:8px 16px;font-size:13px}
+  .bd-hero h1{font-size:32px}
+  .bd-hero-excerpt{font-size:17px}
+  .bd-article{padding:30px 24px}
+  .bd-article h2{font-size:26px}
+  .bd-article h3{font-size:20px}
+  .bd-article p,.bd-article li{font-size:16px}
+}
