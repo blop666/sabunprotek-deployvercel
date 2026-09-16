@@ -127,5 +127,6 @@ export default function BlogDetail(){
         </button>
       </div>
     </section>
+
   </div>;
 }
