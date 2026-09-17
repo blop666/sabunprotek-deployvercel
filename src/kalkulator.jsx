@@ -207,45 +207,69 @@ export default function Kalkulator(){
     );
   };
  
- // Perhitungan untuk satu set produk (Protek atau Pembanding)
- const hitungBiaya=(products,isProtek=false)=>{
-   const totalLinenBulanan=beratLinenHarian*hariOperasional;
-   
-   let totalBiaya=0;
-   const details=products.map((p,i)=>{
-     let hargaPerLiter,dosisPerKg;
-     
-     if(isProtek){
-       hargaPerLiter=p.hargaPerGalon/p.volumeKemasan;
-       dosisPerKg=dosisProtek[i];
-     }else{
-       hargaPerLiter=p.hargaPerKemasan/p.volumeKemasan;
-       dosisPerKg=jenis===1?p.dosisNonInfeksius:p.dosisInfeksius;
-     }
-     
-     const costPerKg=(dosisPerKg/1000)*hargaPerLiter;
-     const totalBiayaProduk=costPerKg*totalLinenBulanan;
-     
-     totalBiaya+=totalBiayaProduk;
-     
-     return {
-       nama:p.nama,
-       costPerKg,
-       totalBiayaProduk,
-       dosis:dosisPerKg
-     };
-   });
-   
-   return {
-     totalBiaya,
-     biayaHarian:totalBiaya/hariOperasional,
-     biayaMingguan:(totalBiaya/hariOperasional)*7,
-     biayaTahunan:totalBiaya*12,
-     details,
-     avgCostPerKg:totalBiaya/totalLinenBulanan,
-     avgDosis:details.reduce((sum,d)=>sum+d.dosis,0)/details.length
-   };
- };
+  // Perhitungan untuk satu set produk (Protek atau Pembanding)
+  const hitungBiaya=(products,isProtek=false)=>{
+    const totalLinenBulanan=beratLinenHarian*hariOperasional;
+    
+    let totalBiaya=0;
+    let totalBiayaInfeksius=0;
+    let totalBiayaNonInfeksius=0;
+    
+    const details=products.map((p,i)=>{
+      let hargaPerLiter,dosisPerKg,dosisInfeksius,dosisNonInfeksius;
+      
+      if(isProtek){
+        hargaPerLiter=p.hargaPerGalon/p.volumeKemasan;
+        dosisPerKg=dosisProtek[i];
+        dosisInfeksius=dosisProtek[i]; // user input untuk protek
+        dosisNonInfeksius=dosisProtek[i]; // user input untuk protek
+      }else{
+        hargaPerLiter=p.hargaPerKemasan/p.volumeKemasan;
+        dosisPerKg=jenis===1?p.dosisNonInfeksius:p.dosisInfeksius;
+        dosisInfeksius=p.dosisInfeksius;
+        dosisNonInfeksius=p.dosisNonInfeksius;
+      }
+      
+      const costPerKg=(dosisPerKg/1000)*hargaPerLiter;
+      const costPerKgInfeksius=(dosisInfeksius/1000)*hargaPerLiter;
+      const costPerKgNonInfeksius=(dosisNonInfeksius/1000)*hargaPerLiter;
+      
+      const totalBiayaProduk=costPerKg*totalLinenBulanan;
+      
+      totalBiaya+=totalBiayaProduk;
+      totalBiayaInfeksius+=costPerKgInfeksius;
+      totalBiayaNonInfeksius+=costPerKgNonInfeksius;
+      
+      return {
+        nama:p.nama,
+        costPerKg,
+        costPerKgInfeksius,
+        costPerKgNonInfeksius,
+        totalBiayaProduk,
+        dosis:dosisPerKg
+      };
+    });
+    
+    const avgCostPerKgInfeksius=totalBiayaInfeksius/details.length;
+    const avgCostPerKgNonInfeksius=totalBiayaNonInfeksius/details.length;
+    const avgCostPerKg=totalBiaya/totalLinenBulanan;
+    
+    const biayaHarian=avgCostPerKg*beratLinenHarian;
+    const biayaBulanan=biayaHarian*hariOperasional;
+    const biayaTahunan=biayaBulanan*12;
+    
+    return {
+      totalBiaya,
+      biayaHarian,
+      biayaBulanan,
+      biayaTahunan,
+      details,
+      avgCostPerKg,
+      avgCostPerKgInfeksius,
+      avgCostPerKgNonInfeksius,
+      avgDosis:details.reduce((sum,d)=>sum+d.dosis,0)/details.length
+    };
+  };
  
  // Hitung biaya Protek dan Pembanding
  const biayaProtek=useMemo(()=>hitungBiaya(protekProducts,true),[dosisProtek,jenis,beratLinenHarian,hariOperasional,kapasitasMesin]);
@@ -305,49 +329,70 @@ export default function Kalkulator(){
     <h1>Bandingkan Produk Laundry</h1>
     <p>Jangan hanya membandingkan harga. Bandingkan total efisiensi. dosis, hasil, dan nilai yang Anda dapatkan.</p>
    </section>
-   <section className="calc-forms">
-    <div className="cf-card">
-     <div className="cf-badge">Data Operasional - Input Data Laundry</div>
-      <div className="cf-fields">
-       <Field icon={icon.hospital} label="Nama Rumah Sakit"><input className="cf-input" value={namaRS} onChange={e=>setNamaRS(e.target.value)}/></Field>
-       <Field icon={icon.scale} label="Berat Linen Kotor"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={beratLinenHarian||''} onChange={e=>handleNumberInput(e,setBeratLinenHarian)}/><span className="cf-unit">kg/hari</span></div></Field>
-       <Field icon={icon.user} label="Jenis Linen"><div className="cf-tabs">{['Infeksius','Non Infeksius'].map((t,i)=><button key={t} type="button" className={'cf-tab'+(i===jenis?' on':'')} onClick={()=>updateJenis(i)}>{t}</button>)}</div></Field>
-       <Field icon={icon.washing} label="Kapasitas Mesin"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={kapasitasMesin||''} onChange={e=>handleNumberInput(e,setKapasitasMesin)}/><span className="cf-unit">kg/load</span></div></Field>
-       <Field icon={icon.calendar} label="Hari Operasional"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={hariOperasional||''} onChange={e=>handleNumberInput(e,setHariOperasional)}/><span className="cf-unit">hari/bulan</span></div></Field>
-      </div>
-    </div>
-    <div className="cf-card side pembanding">
-      <div className="cf-badge pembanding">Dosis Produk Pembanding - Input Dosis Produk Lain</div>
-      <div className="cf-fields">
-       {produkPembanding.map((p)=><div className="cf-prod" key={p.id}>
-         <Flask/>
-         <div className="cf-prow">
-           <span>{p.nama}</span>
-           <div className="cf-dose-wrap">
-             <span className="cf-unit-inline">{jenis===1?p.dosisNonInfeksius:p.dosisInfeksius} ml/kg</span>
-           </div>
-         </div>
-         <div className="cf-actions">
-           <button className="cf-icon-btn edit" onClick={()=>openEditModal(p)} title="Edit">
-             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-           </button>
-           <button className="cf-icon-btn delete" onClick={()=>handleDelete(p.id)} title="Hapus">
-             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-           </button>
-         </div>
-       </div>)}
-       <button className="cf-add-btn" onClick={openAddModal}>
-         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 4v16m8-8H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-         Tambah Chemical
-       </button>
-      </div>
+    <section className="calc-forms">
+     <div className="cf-card">
+      <div className="cf-badge">Data Operasional - Input Data Laundry</div>
+       <div className="cf-fields">
+        <Field icon={icon.hospital} label="Nama Rumah Sakit"><input className="cf-input" value={namaRS} onChange={e=>setNamaRS(e.target.value)}/></Field>
+        <Field icon={icon.scale} label="Berat Linen Kotor"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={beratLinenHarian||''} onChange={e=>handleNumberInput(e,setBeratLinenHarian)}/><span className="cf-unit">kg/hari</span></div></Field>
+        <Field icon={icon.user} label="Jenis Linen"><div className="cf-tabs">{['Infeksius','Non Infeksius'].map((t,i)=><button key={t} type="button" className={'cf-tab'+(i===jenis?' on':'')} onClick={()=>updateJenis(i)}>{t}</button>)}</div></Field>
+       </div>
      </div>
+     <div className="cf-card side pembanding">
+       <div className="cf-badge pembanding">Dosis Produk Pembanding - Input Dosis Produk Lain</div>
+       <div className="cf-fields">
+        {produkPembanding.map((p)=>{
+          const hargaPerMl=(p.hargaPerKemasan/(p.volumeKemasan*1000));
+          return <div className="cf-prod" key={p.id}>
+          <Flask/>
+          <div className="cf-prow">
+            <div className="cf-prod-info">
+              <span className="cf-prod-name">{p.nama}</span>
+              <span className="cf-prod-price">{fmt(p.hargaPerKemasan)} / {p.volumeKemasan}L</span>
+              <span className="cf-prod-perml">Rp {Math.round(hargaPerMl)}/ml</span>
+            </div>
+            <div className="cf-dose-wrap">
+              <span className="cf-unit-inline">{jenis===1?p.dosisNonInfeksius:p.dosisInfeksius} ml/kg</span>
+            </div>
+          </div>
+          <div className="cf-actions">
+            <button className="cf-icon-btn edit" onClick={()=>openEditModal(p)} title="Edit">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+            <button className="cf-icon-btn delete" onClick={()=>handleDelete(p.id)} title="Hapus">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        })}
+        <button className="cf-add-btn" onClick={openAddModal}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 4v16m8-8H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          Tambah Chemical
+        </button>
+       </div>
+      </div>
      <div className="cf-card side protek">
-      <div className="cf-badge protek">Dosis Produk PROTEK - Input Dosis Produk</div>
-      <div className="cf-fields">
-       {protekProducts.map((p,i)=><div className="cf-prod" key={p.id}><Flask/><div className="cf-prow"><span>{p.nama}</span><div className="cf-dose-wrap"><input className="cf-dose" type="number" step="0.1" min="0" value={dosisProtek[i]||''} onChange={e=>setDosisProtek(dosisProtek.map((v,j)=>j===i?num(e.target.value):v))}/><span className="cf-unit-inline">ml/kg</span></div></div></div>)}
+       <div className="cf-badge protek">Dosis Produk PROTEK - Input Dosis Produk</div>
+       <div className="cf-fields">
+        {protekProducts.map((p,i)=>{
+          const hargaPerMl=(p.hargaPerGalon/(p.volumeKemasan*1000));
+          return <div className="cf-prod" key={p.id}>
+          <Flask/>
+          <div className="cf-prow">
+            <div className="cf-prod-info">
+              <span className="cf-prod-name">{p.nama}</span>
+              <span className="cf-prod-price">{fmt(p.hargaPerGalon)} / {p.volumeKemasan}L</span>
+              <span className="cf-prod-perml">Rp {Math.round(hargaPerMl)}/ml</span>
+            </div>
+            <div className="cf-dose-wrap">
+              <input className="cf-dose" type="number" step="0.1" min="0" value={dosisProtek[i]||''} onChange={e=>setDosisProtek(dosisProtek.map((v,j)=>j===i?num(e.target.value):v))}/>
+              <span className="cf-unit-inline">ml/kg</span>
+            </div>
+          </div>
+        </div>
+        })}
+       </div>
       </div>
-     </div>
    </section>
    <div className="calc-forms-action">
     <button className="cf-submit-full" type="button" onClick={toResult}>Hitung Perbandingan →</button>
@@ -428,55 +473,76 @@ export default function Kalkulator(){
     </section>
     {tooltip.show&&<div className="radar-tooltip show" style={{position:'fixed',left:tooltip.x+'px',top:tooltip.y+'px',transform:'translate(-50%, -100%)'}}><div className="tt-title">{tooltip.title}</div><div className="tt-value">{tooltip.value}</div><div className="tt-label">{tooltip.label}</div></div>}
    <section className="calc-table">
-    <div className="ct-title"><h2>Hasil Perbandingan Detail</h2></div>
-    <div className="ct-grid">
-     <div className="ct-col">
-      <div className="ct-h">Aspek</div>
-      <div className="ct-c"><Flask/>Dosis Pemakaian (ml/kg/linen)</div>
-      <div className="ct-c"><Flask/>Biaya per kg Linen (Rp)</div>
-      <div className="ct-c"><Flask/>Jumlah Pencucian per Drum</div>
-      <div className="ct-c"><Flask/>Hasil Pencucian</div>
-      <div className="ct-c"><Flask/>Efisiensi Operasional</div>
-      <div className="ct-c"><Flask/>Dukungan PPI</div>
-     </div>
-     <div className="ct-col">
-      <div className="ct-h">PROTEK Laundry Solution</div>
-      <div className="ct-c">{biayaProtek.avgDosis.toFixed(1)} ml/kg</div>
-      <div className="ct-c">{fmt(biayaProtek.avgCostPerKg)}</div>
-      <div className="ct-c">{kapasitasMesin} kg</div>
-      <div className="ct-c">Bersih optimal, warna tetap terjaga</div>
-      <div className="ct-c">Lebih hemat, produktivitas meningkat</div>
-      <div className="ct-c">Ya (teruji dan sesuai standar kesehatan)</div>
-     </div>
-     <div className="ct-col">
-      <div className="ct-h">Produk Laundry Lain</div>
-      <div className="ct-c">{biayaPembanding.avgDosis.toFixed(1)} ml/kg</div>
-      <div className="ct-c">{fmt(biayaPembanding.avgCostPerKg)}</div>
-      <div className="ct-c">{Math.round(kapasitasMesin*0.8)} kg</div>
-      <div className="ct-c">Cukup bersih, warna lebih cepat pudar</div>
-      <div className="ct-c">Standar</div>
-      <div className="ct-c">Terbatas</div>
-     </div>
-     <div className="ct-col">
-       <div className="ct-h">Selisih</div>
-       <div className="ct-c ct-sel">
-         <b>{Math.abs(biayaPembanding.avgDosis-biayaProtek.avgDosis).toFixed(1)} ml/kg</b>
-         <small>({biayaProtek.avgDosis < biayaPembanding.avgDosis ? 'lebih rendah' : 'lebih tinggi'})</small>
-       </div>
-       <div className="ct-c ct-sel">
-         <b>{fmt(Math.abs(biayaPembanding.avgCostPerKg-biayaProtek.avgCostPerKg))}</b>
-         <small>({biayaProtek.avgCostPerKg < biayaPembanding.avgCostPerKg ? 'lebih hemat' : 'lebih mahal'})</small>
-       </div>
-       <div className="ct-c ct-sel">
-         <b>+{Math.round(kapasitasMesin*0.2)} kg</b>
-         <small>(lebih banyak)</small>
-       </div>
-       <div className="ct-c ct-sel"><b>Lebih baik</b><small>(hasil & kualitas)</small></div>
-       <div className="ct-c ct-sel"><b>Lebih efisien</b><small>(waktu & biaya)</small></div>
-       <div className="ct-c ct-sel"><b>Lebih kuat</b><small>(keamanan pasien)</small></div>
+     <div className="ct-title"><h2>Hasil Perbandingan Detail</h2></div>
+     <div className="ct-grid">
+      <div className="ct-col">
+       <div className="ct-h">Aspek</div>
+       <div className="ct-c"><Flask/>Dosis Pemakaian (ml/kg/linen)</div>
+       <div className="ct-c"><Flask/>Biaya per kg Linen Infeksius (Rp)</div>
+       <div className="ct-c"><Flask/>Biaya per kg Linen Non-Infeksius (Rp)</div>
+       <div className="ct-c"><Flask/>Biaya per Hari (Rp)</div>
+       <div className="ct-c"><Flask/>Biaya per Bulan (Rp)</div>
+       <div className="ct-c"><Flask/>Biaya per Tahun (Rp)</div>
+       <div className="ct-c"><Flask/>Hasil Pencucian</div>
+       <div className="ct-c"><Flask/>Efisiensi Operasional</div>
+       <div className="ct-c"><Flask/>Dukungan PPI</div>
       </div>
-    </div>
-   </section>
+      <div className="ct-col">
+       <div className="ct-h">PROTEK Laundry Solution</div>
+       <div className="ct-c">{biayaProtek.avgDosis.toFixed(1)} ml/kg</div>
+       <div className="ct-c">{fmt(biayaProtek.avgCostPerKgInfeksius)}</div>
+       <div className="ct-c">{fmt(biayaProtek.avgCostPerKgNonInfeksius)}</div>
+       <div className="ct-c">{fmt(biayaProtek.biayaHarian)}</div>
+       <div className="ct-c">{fmt(biayaProtek.biayaBulanan)}</div>
+       <div className="ct-c">{fmt(biayaProtek.biayaTahunan)}</div>
+       <div className="ct-c">Bersih optimal, warna tetap terjaga</div>
+       <div className="ct-c">Lebih hemat, produktivitas meningkat</div>
+       <div className="ct-c">Ya (teruji dan sesuai standar kesehatan)</div>
+      </div>
+      <div className="ct-col">
+       <div className="ct-h">Produk Laundry Lain</div>
+       <div className="ct-c">{biayaPembanding.avgDosis.toFixed(1)} ml/kg</div>
+       <div className="ct-c">{fmt(biayaPembanding.avgCostPerKgInfeksius)}</div>
+       <div className="ct-c">{fmt(biayaPembanding.avgCostPerKgNonInfeksius)}</div>
+       <div className="ct-c">{fmt(biayaPembanding.biayaHarian)}</div>
+       <div className="ct-c">{fmt(biayaPembanding.biayaBulanan)}</div>
+       <div className="ct-c">{fmt(biayaPembanding.biayaTahunan)}</div>
+       <div className="ct-c">Cukup bersih, warna lebih cepat pudar</div>
+       <div className="ct-c">Standar</div>
+       <div className="ct-c">Terbatas</div>
+      </div>
+      <div className="ct-col">
+        <div className="ct-h">Selisih</div>
+        <div className="ct-c ct-sel">
+          <b>{Math.abs(biayaPembanding.avgDosis-biayaProtek.avgDosis).toFixed(1)} ml/kg</b>
+          <small>({biayaProtek.avgDosis < biayaPembanding.avgDosis ? 'lebih rendah' : 'lebih tinggi'})</small>
+        </div>
+        <div className="ct-c ct-sel">
+          <b>{fmt(Math.abs(biayaPembanding.avgCostPerKgInfeksius-biayaProtek.avgCostPerKgInfeksius))}</b>
+          <small>({biayaProtek.avgCostPerKgInfeksius < biayaPembanding.avgCostPerKgInfeksius ? 'lebih hemat' : 'lebih mahal'})</small>
+        </div>
+        <div className="ct-c ct-sel">
+          <b>{fmt(Math.abs(biayaPembanding.avgCostPerKgNonInfeksius-biayaProtek.avgCostPerKgNonInfeksius))}</b>
+          <small>({biayaProtek.avgCostPerKgNonInfeksius < biayaPembanding.avgCostPerKgNonInfeksius ? 'lebih hemat' : 'lebih mahal'})</small>
+        </div>
+        <div className="ct-c ct-sel">
+          <b>{fmt(Math.abs(biayaPembanding.biayaHarian-biayaProtek.biayaHarian))}</b>
+          <small>({biayaProtek.biayaHarian < biayaPembanding.biayaHarian ? 'lebih hemat' : 'lebih mahal'})</small>
+        </div>
+        <div className="ct-c ct-sel">
+          <b>{fmt(Math.abs(biayaPembanding.biayaBulanan-biayaProtek.biayaBulanan))}</b>
+          <small>({biayaProtek.biayaBulanan < biayaPembanding.biayaBulanan ? 'lebih hemat' : 'lebih mahal'})</small>
+        </div>
+        <div className="ct-c ct-sel">
+          <b>{fmt(Math.abs(biayaPembanding.biayaTahunan-biayaProtek.biayaTahunan))}</b>
+          <small>({biayaProtek.biayaTahunan < biayaPembanding.biayaTahunan ? 'lebih hemat' : 'lebih mahal'})</small>
+        </div>
+        <div className="ct-c ct-sel"><b>Lebih baik</b><small>(hasil & kualitas)</small></div>
+        <div className="ct-c ct-sel"><b>Lebih efisien</b><small>(waktu & biaya)</small></div>
+        <div className="ct-c ct-sel"><b>Lebih kuat</b><small>(keamanan pasien)</small></div>
+       </div>
+     </div>
+    </section>
    <section className="calc-cta">
     <img src={A+'calc-cta.png'}/>
     <div className="cta-text">

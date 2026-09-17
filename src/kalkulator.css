@@ -31,6 +31,10 @@
 .cf-flask img{width:24px;height:17.2px;display:block}
 .cf-prow{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .cf-prow span{font-weight:700;font-size:12px;color:#2c7efb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cf-prod-info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.cf-prod-name{font-weight:700;font-size:12px;color:#2c7efb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cf-prod-price{font-weight:600;font-size:9px;color:#5a6b85}
+.cf-prod-perml{font-weight:700;font-size:10px;color:#F07C1D}
 .cf-actions{display:flex;gap:4px;align-items:center;flex:none}
 .cf-icon-btn{width:24px;height:24px;border:0;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s ease;background:#fff;flex:none;padding:0}
 .cf-icon-btn.edit{border:1px solid #2c7efb}
