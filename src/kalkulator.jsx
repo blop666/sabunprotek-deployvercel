@@ -56,12 +56,7 @@ const protekProducts=[
 
 // Default chemicals pembanding
 const defaultPembanding=[
-  {id:1,nama:'Detergent A',kategori:'Detergent',hargaPerKemasan:1700000,volumeKemasan:25,dosisNonInfeksius:1.2,dosisInfeksius:6},
-  {id:2,nama:'Detergent B',kategori:'Detergent',hargaPerKemasan:1700000,volumeKemasan:25,dosisNonInfeksius:1.2,dosisInfeksius:6},
-  {id:3,nama:'Bleach A',kategori:'Bleach',hargaPerKemasan:1670000,volumeKemasan:25,dosisNonInfeksius:2.5,dosisInfeksius:7.5},
-  {id:4,nama:'Softener A',kategori:'Softener',hargaPerKemasan:1700000,volumeKemasan:25,dosisNonInfeksius:7,dosisInfeksius:7},
-  {id:5,nama:'Sanitizer A',kategori:'Sanitizer',hargaPerKemasan:1610000,volumeKemasan:25,dosisNonInfeksius:1.2,dosisInfeksius:2.5},
-  {id:6,nama:'Disinfectant A',kategori:'Sanitizer',hargaPerKemasan:2050000,volumeKemasan:25,dosisNonInfeksius:1.2,dosisInfeksius:2.5}
+  {id:1,nama:'Detergent A',kategori:'Detergent',hargaPerKemasan:1700000,volumeKemasan:25,dosisNonInfeksius:1.2,dosisInfeksius:6}
 ];
 
 const Flask=()=><span className="cf-flask"><img src={icon.flask}/></span>;
@@ -88,8 +83,9 @@ export default function Kalkulator(){
  const [beratLinenInfeksius,setBeratLinenInfeksius]=useState(350); // kg/hari
  const [beratLinenNonInfeksius,setBeratLinenNonInfeksius]=useState(150); // kg/hari
  const [hariOperasional,setHariOperasional]=useState(30);
- const [kapasitasMesin,setKapasitasMesin]=useState(35);
- const [namaRS,setNamaRS]=useState('Rumah Sakit Hermina');
+  const [kapasitasMesin,setKapasitasMesin]=useState(35);
+  const [namaRS,setNamaRS]=useState('Rumah Sakit Hermina');
+  const [namaProdukPembanding,setNamaProdukPembanding]=useState('');
  
  // Calculate ratio from berat linen
  const rasioInfeksius=beratLinenHarian>0?(beratLinenInfeksius/beratLinenHarian)*100:70;
@@ -103,7 +99,10 @@ export default function Kalkulator(){
  // State untuk produk pembanding (user bisa CRUD)
  const [produkPembanding,setProdukPembanding]=useState(()=>{
    const saved=localStorage.getItem('produkPembanding');
-   return saved?JSON.parse(saved):defaultPembanding;
+    const parsed=saved?JSON.parse(saved):null;
+    const oldDefaults=['Detergent A','Detergent B','Bleach A','Softener A','Sanitizer A','Disinfectant A'];
+    const isOldDefault=Array.isArray(parsed)&&parsed.length===oldDefaults.length&&parsed.every((p,i)=>p.nama===oldDefaults[i]);
+    return isOldDefault?defaultPembanding:(parsed||defaultPembanding);
  });
  
   // State untuk modal
@@ -434,7 +433,7 @@ export default function Kalkulator(){
       show:true,
       x:rect.left+rect.width/2,
       y:rect.top-10,
-      title:isProtek?'PROTEK':'Produk Lain',
+      title:isProtek?'PROTEK':(namaProdukPembanding.trim()||'Produk Lain').toUpperCase(),
       value:value,
       label:radarLabels[i]
     });
@@ -466,11 +465,12 @@ export default function Kalkulator(){
         </button>
        </div>
       <section className="calc-forms">
-      <div className="cf-card">
-       <div className="cf-badge">Data Operasional - Input Data Laundry</div>
-         <div className="cf-fields">
-          <Field icon={icon.hospital} label="Nama Rumah Sakit"><input className="cf-input" value={namaRS} onChange={e=>setNamaRS(e.target.value)}/></Field>
-          <Field icon={icon.scale} label="Berat Linen Kotor"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={beratLinenHarian||''} onChange={e=>handleNumberInput(e,handleBeratLinenHarianChange)}/><span className="cf-unit">kg/hari</span></div></Field>
+       <div className="cf-card">
+        <div className="cf-badge">Data Operasional - Input Data Laundry</div>
+          <div className="cf-fields">
+           <Field icon={icon.hospital} label="Nama Rumah Sakit"><input className="cf-input" value={namaRS} onChange={e=>setNamaRS(e.target.value)}/></Field>
+           <Field icon={icon.flask} label="Nama Produk Pembanding"><input className="cf-input" value={namaProdukPembanding} onChange={e=>setNamaProdukPembanding(e.target.value)} placeholder="Contoh: Produk Laundry A"/></Field>
+           <Field icon={icon.scale} label="Berat Linen Kotor"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={beratLinenHarian||''} onChange={e=>handleNumberInput(e,handleBeratLinenHarianChange)}/><span className="cf-unit">kg/hari</span></div></Field>
            <div className="cf-row ratio-row">
              <img src={icon.user}/>
              <div className="cf-field">
@@ -497,7 +497,10 @@ export default function Kalkulator(){
          </div>
       </div>
       <div className="cf-card side pembanding">
-        <div className="cf-badge pembanding">Dosis Produk Pembanding - Input Dosis Produk Lain</div>
+         <div className="cf-badge pembanding cf-badge-with-meta">
+          <span>Dosis {namaProdukPembanding.trim()||'Produk Pembanding'} - Input Dosis Produk Lain</span>
+          <small>{namaRS.trim()||'Nama Rumah Sakit'}</small>
+         </div>
         <div className="cf-fields">
          {produkPembanding.map((p)=>{
            const hargaPerMl=(p.hargaPerKemasan/(p.volumeKemasan*1000));
@@ -698,8 +701,8 @@ export default function Kalkulator(){
     <section className="calc-radar">
     <h2>Hasil Perbandingan</h2>
     <div className="radar-legend">
-     <span className="rl rl-protek"><i className="dot-protek"/>PROTEK (dari input dosis Anda)</span>
-     <span className="rl rl-other"><i className="dot-other"/>Produk Laundry Lain (estimasi pasar)</span>
+     <span className="rl rl-protek"><i className="dot-protek"/>PROTEK</span>
+     <span className="rl rl-other"><i className="dot-other"/>{(namaProdukPembanding.trim()||'Produk Laundry Lain').toUpperCase()}</span>
     </div>
     <div className="radar-scale"><div className="radar">
      <svg className="radar-svg" viewBox="0 0 776 707.569" fill="none" xmlns="http://www.w3.org/2000/svg">

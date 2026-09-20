@@ -13,6 +13,8 @@
 .cf-badge{align-self:flex-start;background:#125bbd;color:#fff;font-weight:600;font-size:12px;padding:14px 21px;border-radius:28px;white-space:nowrap}
 .cf-badge.pembanding{background:#F07C1D;color:#fff}
 .cf-badge.protek{background:#125bbd;color:#fff}
+.cf-badge-with-meta{display:flex;flex-direction:column;gap:4px;white-space:normal;line-height:1.2}
+.cf-badge-with-meta small{font-size:10px;font-weight:500;opacity:.9}
 .cf-fields{display:flex;flex-direction:column;gap:7px;width:100%;flex:1}
 .cf-row{display:flex;gap:20px;align-items:center}
 .cf-row>img{width:24px;height:24px;flex:none}
