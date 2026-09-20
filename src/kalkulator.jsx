@@ -693,7 +693,7 @@ export default function Kalkulator(){
        {ptsO.map(([x,y],i)=><circle key={'o'+i} cx={x.toFixed(1)} cy={y.toFixed(1)} r="8" fill="#F07C1D" stroke="white" strokeWidth="3" style={{cursor:'pointer'}} onMouseEnter={e=>showTooltip(i,false,e)} onMouseLeave={hideTooltip}/>)}
       </svg>
        <span className="rlabel" style={{left:0,top:314}}>Biaya Linen<br/>Infeksius</span>
-      <span className="rlabel" style={{left:350,top:-15}}>Efektivitas<br/>Pembersihan</span>
+      <span className="rlabel rlabel-top">Efektivitas Pembersihan</span>
       <span className="rlabel" style={{left:208,top:757.5}}>Efisiensi Biaya</span>
       <span className="rlabel" style={{left:721,top:757.5}}>Efisiensi Dosis</span>
       <span className="rlabel" style={{left:1003,top:309}}>Konsumsi<br/>Chemical</span>
