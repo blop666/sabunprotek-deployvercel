@@ -68,13 +68,13 @@
 
 @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-.modal-header{padding:24px 28px;border-bottom:2px solid #edf0ff;display:flex;align-items:center;justify-content:space-between}
+.modal-header{padding:22px 28px;border-bottom:1px solid #e7eefb;display:flex;align-items:center;justify-content:space-between}
 
-.modal-header h3{margin:0;font-size:20px;font-weight:700;color:#021d46}
+.modal-header h3{margin:0;font-size:20px;font-weight:800;color:#021d46;letter-spacing:-.02em}
 
-.modal-close{width:32px;height:32px;border:0;border-radius:8px;background:#f8f9fd;color:#5a6b85;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
+.modal-close{width:34px;height:34px;border:0;border-radius:9px;background:#f5f7fb;color:#647895;font-size:22px;font-weight:700;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
 
-.modal-close:hover{background:#2c7efb;color:#fff}
+.modal-close:hover{background:#e5efff;color:#125bbd}
 
 .modal-body{padding:24px 28px;display:flex;flex-direction:column;gap:16px}
 
@@ -166,3 +166,118 @@
 .btn-secondary:hover{border-color:#2C7EFB;color:#2C7EFB;background:#EDF0FF}
 .btn-danger{flex:1;background:#cf1322;border:0;border-radius:10px;padding:12px 24px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s ease;font-family:inherit}
 .btn-danger:hover{background:#a50f1a;transform:translateY(-1px)}
+
+/* Ratio Slider & Presets */
+.cf-ratio-presets{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.cf-preset{padding:12px 8px;background:#fff;border:2px solid #d0e0ff;border-radius:8px;color:#2c7efb;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s ease;font-family:inherit;white-space:nowrap;text-align:center}
+.cf-preset:hover{background:#edf0ff;border-color:#2c7efb}
+.cf-preset.active{background:#2c7efb;color:#fff;border-color:#2c7efb}
+.cf-ratio-slider{display:flex;flex-direction:column;gap:8px}
+.cf-ratio-labels{display:flex;justify-content:space-between;align-items:center}
+.cf-ratio-label-left,.cf-ratio-label-right{font-size:11px;font-weight:700;color:#2c7efb}
+.cf-slider{width:100%;height:6px;border-radius:3px;background:linear-gradient(to right,#2c7efb 0%,#2c7efb 50%,#F07C1D 50%,#F07C1D 100%);outline:none;-webkit-appearance:none;appearance:none;cursor:pointer}
+.cf-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid #2c7efb;cursor:pointer;box-shadow:0 2px 6px rgba(44,126,251,.3);transition:all .2s ease}
+.cf-slider::-webkit-slider-thumb:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(44,126,251,.5)}
+.cf-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid #2c7efb;cursor:pointer;box-shadow:0 2px 6px rgba(44,126,251,.3);transition:all .2s ease}
+.cf-slider::-moz-range-thumb:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(44,126,251,.5)}
+.cf-ratio-detail{display:flex;flex-direction:column;gap:4px;margin-top:8px;padding:8px 12px;background:#f0f7ff;border-radius:7px}
+.cf-ratio-detail span{font-size:10px;font-weight:600;color:#5a6b85}
+
+/* Ratio Inputs */
+.cf-ratio-inputs{display:flex;flex-direction:column;gap:20px;margin-top:20px}
+.cf-ratio-input-group{display:flex;align-items:center;gap:16px}
+.cf-ratio-input-group label{flex:0 0 180px;font-size:14px;font-weight:700;color:#021d46}
+.cf-ratio-input-group .cf-inputs{flex:1;display:flex;align-items:center;gap:8px}
+.cf-ratio-input-group .cf-inputs input{flex:1;min-width:0}
+.cf-ratio-percent{flex:0 0 80px;font-size:32px;font-weight:800;color:#2c7efb;text-align:right;line-height:1}
+
+/* Keep the ratio controls inside the operational card at every card width. */
+.cf-ratio-presets{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:18px}
+.cf-preset{min-width:0;padding:10px 4px;font-size:10px;overflow:hidden;text-overflow:clip}
+.cf-ratio-inputs{gap:14px;margin-top:0}
+.cf-ratio-input-group{display:grid;grid-template-columns:minmax(0,1fr) 112px 42px;gap:8px;width:100%}
+.cf-ratio-input-group label{min-width:0;font-size:12px;white-space:nowrap}
+.cf-ratio-input-group .cf-inputs{width:112px;flex:none;gap:4px}
+.cf-ratio-input-group .cf-inputs .cf-input{width:52px;padding-left:8px;padding-right:8px}
+.cf-ratio-input-group .cf-inputs .cf-unit{padding-left:7px;padding-right:7px;font-size:9px}
+.cf-ratio-percent{flex:0 0 auto;font-size:16px;line-height:1;text-align:right}
+
+@media(max-width:900px){
+  .cf-ratio-presets{gap:4px}
+  .cf-preset{font-size:9px;padding-left:2px;padding-right:2px}
+  .cf-ratio-input-group{grid-template-columns:minmax(0,1fr) 106px 38px;gap:6px}
+  .cf-ratio-input-group .cf-inputs{width:106px}
+}
+
+/* Comparison summary shown after the user runs the comparison. */
+.comparison-summary{width:1200px;margin:42px auto 0;padding:30px 32px;background:#fff;border:1px solid #dce8ff;border-radius:20px;box-shadow:0 10px 30px rgba(34,91,178,.08)}
+.summary-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:22px}
+.summary-heading h2{margin:5px 0 0;color:#083b7f;font-size:28px}
+.summary-heading p{max-width:520px;margin:0;color:#667894;font-size:11px;line-height:1.4;text-align:right;white-space:nowrap}
+.summary-kicker{color:#2c7efb;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.summary-table-wrap{overflow-x:auto}
+.summary-table{width:100%;border-collapse:collapse;table-layout:fixed;color:#17355e;font-size:13px}
+.summary-table th,.summary-table td{padding:14px 16px;border-bottom:1px solid #e5edfb;text-align:left;vertical-align:middle}
+.summary-table th{background:#2c7efb;color:#fff;font-size:12px;font-weight:800}
+.summary-table th:first-child{border-radius:10px 0 0 0}
+.summary-table th:last-child{border-radius:0 10px 0 0}
+.summary-table td:first-child{font-weight:800;color:#24466f}
+.summary-table td:nth-child(2){color:#125bbd;font-weight:800}
+.summary-table td:nth-child(3){color:#c76617;font-weight:800}
+.summary-table td:last-child{font-weight:700;color:#125bbd}
+
+@media(max-width:1250px){
+  .comparison-summary{width:calc(100% - 40px)}
+}
+
+@media(max-width:700px){
+  .summary-heading{display:block}
+  .summary-heading p{margin-top:10px;text-align:left;white-space:normal}
+  .summary-table{min-width:760px}
+}
+
+/* Prevent preset text from being clipped inside the three-column card. */
+.cf-ratio-presets{align-items:stretch}
+.cf-preset{height:42px;display:flex;align-items:center;justify-content:center;white-space:normal;line-height:1.15;font-size:9px;overflow:visible}
+.cf-ratio-input-group{align-items:center}
+.cf-ratio-input-group label{overflow:hidden;text-overflow:ellipsis}
+
+/* Reject Button */
+.cf-reject-btn{width:100%;height:48px;background:#fff;border:2px solid #2c7efb;border-radius:14px;color:#2c7efb;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
+.cf-reject-btn:hover{background:#edf0ff;border-color:#125bbd;color:#125bbd}
+.cf-reject-btn svg{width:16px;height:16px}
+
+/* Reject Modal */
+.modal-reject{max-width:560px;border-radius:18px;overflow:hidden}
+.reject-info-btn{margin-bottom:16px}
+.info-btn{width:100%;padding:10px 16px;background:#f0f7ff;border:1px solid #2c7efb;border-radius:10px;color:#2c7efb;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;justify-content:center;transition:all .2s ease;font-family:inherit}
+.info-btn:hover{background:#edf0ff}
+.info-btn svg{width:16px;height:16px}
+.reject-info-panel{margin-top:10px;padding:18px 20px;background:#f6f9ff;border:1px solid #c9d9fb;border-left:3px solid #2c7efb;border-radius:12px;color:#17355e;box-shadow:0 6px 16px rgba(44,126,251,.08)}
+.reject-info-panel-head{display:flex;align-items:center;justify-content:space-between;color:#083b7f;font-size:14px}
+.reject-info-panel-head button{width:28px;height:28px;border:0;border-radius:8px;background:#e5efff;color:#125bbd;font-size:18px;font-weight:700;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.reject-info-panel-head button:hover{background:#2c7efb;color:#fff}
+.reject-info-panel p{margin:12px 0;color:#647895;font-size:12px;line-height:1.55}
+.reject-info-rule{display:flex;justify-content:space-between;padding:9px 12px;margin-top:7px;border-radius:8px;background:#eaf8ee;color:#238044;font-size:12px}
+.reject-info-rule.warning{background:#fff4e5;color:#b86911}
+.reject-info-example{padding-top:12px;border-top:1px solid #dce8ff}
+.modal-reject-input{display:flex;gap:8px;align-items:center}
+.modal-reject-input input{flex:1}
+.modal-btn-calc{padding:8px 16px;background:#2c7efb;border:0;border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .2s ease}
+.modal-btn-calc:hover{background:#125bbd}
+.modal-btn-calc-full{width:100%;padding:12px;background:#2c7efb;border:0;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0;font-family:inherit;transition:all .2s ease}
+.modal-btn-calc-full:hover{background:#125bbd}
+.modal-btn-calc-full svg{width:16px;height:16px}
+.modal-hint{display:block;margin-top:4px;font-size:10px;color:#7a8ba5;font-style:italic}
+.reject-result{margin-top:20px;padding:20px;background:#f0f7ff;border-radius:12px;border:2px solid #2c7efb}
+.reject-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.reject-rate-value{font-size:32px;font-weight:800;color:#2c7efb}
+.reject-status{font-size:14px;font-weight:700;padding:6px 12px;border-radius:8px}
+.reject-status.efektif{background:#f6ffed;color:#52c41a}
+.reject-status.tidak-efektif{background:#fff7e6;color:#f59e0b}
+.reject-impact{margin-top:12px;padding-top:12px;border-top:1px solid #d0e0ff}
+.reject-impact p{margin:4px 0;font-size:12px;color:#021d46}
+.reject-impact strong{color:#2c7efb}
+.checkbox-label{display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:12px}
+.checkbox-label input[type="checkbox"]{width:18px;height:18px;cursor:pointer}
+.checkbox-label span{font-size:13px;font-weight:600;color:#021d46}
