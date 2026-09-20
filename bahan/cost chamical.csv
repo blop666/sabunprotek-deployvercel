@@ -1,0 +1,23 @@
+ILUSTRASI FORMULA DOSIS PENCUCIAN DAN COST PROTEK PER KG ,,,,,,,,,,,,         Dosis Pemakain,,,,,Kebutuhan per bulan,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+NO,NAMA ,HARGA /,HARGA ,DOSIS, NON INFEKSIUS,,DOSIS,INFEKSIUS,,,,NO,NAMA ,Non Infeksius,Infeksius,,NO,NAMA ,Non Infeksius,Infeksius,Total camical,Konversi ,Total belanja
+,PRODUK,Galon (25 Ltr),Per Ltr,Per Kg,Mesin,Cost,Per Kg,Mesin,Cost,,,,PRODUK,Mesin,Mesin,,,PRODUK,Ltr/Bln,Ltr/Bln,non + infeksi,Ke kemasan,per bulan 
+,,(Rp),(Rp),(ml),35,(Rp),(ml),35,(Rp),,,,,35,35,,,,,,,25 Ltr,(Rp)
+1,AVENGER L," 1,305,234 "," 52,209 ",1,35," 1,827 ",5,175," 9,137 ",,,1,AVENGER L,35,175,,1,AVENGER L," 5,400 "," 63,000 "," 68,400 ", 3 ," 3,571,120 "
+2,LAUNTEX L," 1,305,234 "," 52,209 ",1,35," 1,827 ",5,175," 9,137 ",,,2,LAUNTEX L,35,175,,2,LAUNTEX L," 5,400 "," 63,000 "," 68,400 ", 3 ," 3,571,120 "
+3,PROTEK OXYGEN ACTIVE," 1,283,028 "," 51,321 ",2,70," 3,592 ",6,210," 10,777 ",,,3,PROTEK OXYGEN ACTIVE,70,210,,3,PROTEK OXYGEN ACTIVE," 10,800 "," 75,600 "," 86,400 ", 3 ," 4,434,145 "
+4,PROTEK FABRIC SOFT," 1,305,234 "," 52,209 ",6,210," 10,964 ",6,210," 10,964 ",,,4,PROTEK FABRIC SOFT,210,210,,4,PROTEK FABRIC SOFT," 32,400 "," 75,600 "," 108,000 ", 4 ," 5,638,611 "
+5,SENTRY L," 1,238,293 "," 49,532 ",1,35," 1,734 ",2,70," 3,467 ",,,5,SENTRY L,35,70,,5,SENTRY L," 5,400 "," 25,200 "," 30,600 ", 1 ," 1,515,671 "
+6,ACTION," 1,579,786 "," 63,191 ",1,35," 2,212 ",2,70," 4,423 ",,,6,ACTION,35,70,,6,ACTION," 5,400 "," 25,200 "," 30,600 ", 1 ," 1,933,658 "
+Cost per Load,,,,,," 22,156 ",,," 47,905 ",,,,,,,,,,TOTAL (RP),,,," 20,664,325 "
+Cost per Kg,,,,,, 633 ,,," 1,369 ",,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+Rata-Rata Load Per Hari,,,,600,Kg,,,,,,,,,,,,,,,,,,
+Load Per Bulan,,,," 18,000 ",Kg,,,,,,,,,,,,,,,,,,
+Load Non Infeksius,,,,30%,x                ," 18,000 ",=," 5,400 ",Kg/bulan,,,,,,,,,,,,,,
+Load Infeksius,,,,70%,x                 ," 18,000 ",=," 12,600 ",Kg/bulan,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+Cost per Kg Non Infeksius,,, Rp. , 633 ,x," 5,400 ",.=  Rp.," 3,418,418 ",,,,,,,,,,,,,,,
+Cost per Kg Infeksius,,, Rp. ," 1,369 ",x," 12,600 ",.=  Rp.," 17,245,907 ",,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+Pembelian Chemical PROTEK per bulan  =                      Rp.,,,,,," 20,664,325 ",,,,,,,,,,,,,,,,,
