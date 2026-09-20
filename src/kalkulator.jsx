@@ -469,7 +469,7 @@ export default function Kalkulator(){
         <div className="cf-badge">Data Operasional - Input Data Laundry</div>
           <div className="cf-fields">
            <Field icon={icon.hospital} label="Nama Rumah Sakit"><input className="cf-input" value={namaRS} onChange={e=>setNamaRS(e.target.value)}/></Field>
-           <Field icon={icon.flask} label="Nama Produk Pembanding"><input className="cf-input" value={namaProdukPembanding} onChange={e=>setNamaProdukPembanding(e.target.value)} placeholder="Contoh: Produk Laundry A"/></Field>
+           <Field icon={icon.flask} label="Nama Produk Chemical Laundry"><input className="cf-input" value={namaProdukPembanding} onChange={e=>setNamaProdukPembanding(e.target.value)} placeholder="Contoh: Produk Laundry A"/></Field>
            <Field icon={icon.scale} label="Berat Linen Kotor"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={beratLinenHarian||''} onChange={e=>handleNumberInput(e,handleBeratLinenHarianChange)}/><span className="cf-unit">kg/hari</span></div></Field>
            <div className="cf-row ratio-row">
              <img src={icon.user}/>
