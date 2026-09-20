@@ -453,24 +453,28 @@ export default function Kalkulator(){
     <h1>Bandingkan Produk Laundry</h1>
     <p>Jangan hanya membandingkan harga. Bandingkan total efisiensi. dosis, hasil, dan nilai yang Anda dapatkan.</p>
    </section>
-      <div className="top-reject-action">
-       <button className="cf-reject-btn" type="button" onClick={openRejectModalStandalone}>Hitung Reject Rate</button>
-      </div>
+       <div className="top-reject-action">
+        <button className="reject-cta-card" type="button" onClick={openRejectModalStandalone}>
+         <span className="reject-cta-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="2.5" width="14" height="19" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M8 6h8v3H8zM8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+         </span>
+         <span className="reject-cta-copy">
+          <strong>Hitung Reject Rate</strong>
+          <span>Ukur efektivitas cucian dan lihat dampaknya terhadap biaya laundry.</span>
+          <span className="reject-cta-link">Mulai perhitungan <span aria-hidden="true">→</span></span>
+         </span>
+        </button>
+       </div>
       <section className="calc-forms">
       <div className="cf-card">
        <div className="cf-badge">Data Operasional - Input Data Laundry</div>
          <div className="cf-fields">
           <Field icon={icon.hospital} label="Nama Rumah Sakit"><input className="cf-input" value={namaRS} onChange={e=>setNamaRS(e.target.value)}/></Field>
           <Field icon={icon.scale} label="Berat Linen Kotor"><div className="cf-inputs"><input className="cf-input" type="number" min="0" value={beratLinenHarian||''} onChange={e=>handleNumberInput(e,handleBeratLinenHarianChange)}/><span className="cf-unit">kg/hari</span></div></Field>
-          <Field icon={icon.user} label="Rasio Jenis Linen">
-            <div className="cf-ratio-presets">
-              <button type="button" className={'cf-preset'+(Math.round(rasioInfeksius)===100?' active':'')} onClick={()=>setRatioPreset(100,0)}>100% Infeksius</button>
-              <button type="button" className={'cf-preset'+(Math.round(rasioInfeksius)===70?' active':'')} onClick={()=>setRatioPreset(70,30)}>70/30</button>
-              <button type="button" className={'cf-preset'+(Math.round(rasioInfeksius)===50?' active':'')} onClick={()=>setRatioPreset(50,50)}>50/50</button>
-              <button type="button" className={'cf-preset'+(Math.round(rasioInfeksius)===30?' active':'')} onClick={()=>setRatioPreset(30,70)}>30/70</button>
-              <button type="button" className={'cf-preset'+(Math.round(rasioInfeksius)===0?' active':'')} onClick={()=>setRatioPreset(0,100)}>100% Non-Inf</button>
-            </div>
-            <div className="cf-ratio-inputs">
+           <div className="cf-row ratio-row">
+             <img src={icon.user}/>
+             <div className="cf-field">
+             <div className="cf-ratio-inputs">
               <div className="cf-ratio-input-group">
                 <label>Linen Infeksius</label>
                 <div className="cf-inputs">
@@ -487,8 +491,9 @@ export default function Kalkulator(){
                 </div>
                 <span className="cf-ratio-percent">{rasioNonInfeksius.toFixed(0)}%</span>
               </div>
-            </div>
-          </Field>
+             </div>
+             </div>
+           </div>
          </div>
       </div>
       <div className="cf-card side pembanding">
