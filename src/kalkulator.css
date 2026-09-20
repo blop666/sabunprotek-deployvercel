@@ -261,8 +261,9 @@
 .reject-cta-link{margin-top:4px;font-size:12px;font-weight:800;color:#fff}
 .reject-cta-link span{display:inline-block;margin-left:4px;transition:transform .2s ease}
 .reject-cta-card:hover .reject-cta-link span{transform:translateX(3px)}
-.ratio-row{align-items:flex-start}
-.ratio-row .cf-field{padding-top:1px}
+.ratio-row{align-items:center;margin-top:14px}
+.ratio-row>img{align-self:center}
+.ratio-row .cf-field{padding-top:0}
 .old-result-reject-action{display:none}
 .result-reject-action .cf-reject-btn{width:auto;min-width:220px;margin:0;background:#cf3434;color:#fff;border-color:#cf3434;box-shadow:0 5px 14px rgba(207,52,52,.2)}
 .result-reject-action .cf-reject-btn:hover{background:#b42323;border-color:#b42323;color:#fff}
