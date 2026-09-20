@@ -167,6 +167,14 @@ export default function Kalkulator(){
     setBeratLinenNonInfeksius(nonInfeksius);
     setBeratLinenInfeksius(beratLinenHarian-nonInfeksius);
   };
+
+  const handleRatioPercentChange=(value,isInfeksius)=>{
+    const percent=Math.max(0,Math.min(100,value));
+    const infeksiusPercent=isInfeksius?percent:100-percent;
+    const infeksius=Math.round(beratLinenHarian*infeksiusPercent/100);
+    setBeratLinenInfeksius(infeksius);
+    setBeratLinenNonInfeksius(beratLinenHarian-infeksius);
+  };
   
   // Handler untuk total berat linen (adjust proporsi)
   const handleBeratLinenHarianChange=(value)=>{
@@ -445,7 +453,10 @@ export default function Kalkulator(){
     <h1>Bandingkan Produk Laundry</h1>
     <p>Jangan hanya membandingkan harga. Bandingkan total efisiensi. dosis, hasil, dan nilai yang Anda dapatkan.</p>
    </section>
-     <section className="calc-forms">
+      <div className="top-reject-action">
+       <button className="cf-reject-btn" type="button" onClick={openRejectModalStandalone}>Hitung Reject Rate</button>
+      </div>
+      <section className="calc-forms">
       <div className="cf-card">
        <div className="cf-badge">Data Operasional - Input Data Laundry</div>
          <div className="cf-fields">
@@ -463,16 +474,16 @@ export default function Kalkulator(){
               <div className="cf-ratio-input-group">
                 <label>Linen Infeksius</label>
                 <div className="cf-inputs">
-                  <input className="cf-input" type="number" min="0" max={beratLinenHarian} value={beratLinenInfeksius||''} onChange={e=>handleNumberInput(e,handleBeratInfeksiusChange)}/>
-                  <span className="cf-unit">kg/hari</span>
+                  <input className="cf-input" type="number" min="0" max="100" value={rasioInfeksius.toFixed(0)} onChange={e=>handleNumberInput(e,v=>handleRatioPercentChange(v,true))}/>
+                  <span className="cf-unit">%</span>
                 </div>
                 <span className="cf-ratio-percent">{rasioInfeksius.toFixed(0)}%</span>
               </div>
               <div className="cf-ratio-input-group">
                 <label>Linen Non-Infeksius</label>
                 <div className="cf-inputs">
-                  <input className="cf-input" type="number" min="0" max={beratLinenHarian} value={beratLinenNonInfeksius||''} onChange={e=>handleNumberInput(e,handleBeratNonInfeksiusChange)}/>
-                  <span className="cf-unit">kg/hari</span>
+                  <input className="cf-input" type="number" min="0" max="100" value={rasioNonInfeksius.toFixed(0)} onChange={e=>handleNumberInput(e,v=>handleRatioPercentChange(v,false))}/>
+                  <span className="cf-unit">%</span>
                 </div>
                 <span className="cf-ratio-percent">{rasioNonInfeksius.toFixed(0)}%</span>
               </div>
@@ -537,13 +548,13 @@ export default function Kalkulator(){
        </div>
       </div>
    </section>
-   <div className="calc-forms-action">
-    <button className="cf-reject-btn" type="button" onClick={openRejectModalStandalone}>
+    <div className="calc-forms-action">
+        <button className="cf-reject-btn legacy-reject-position" type="button" onClick={openRejectModalStandalone}>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11H7a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2zM15 11h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM9 17H7a2 2 0 01-2-2v-2a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2zM15 17h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
       Hitung Reject Rate
     </button>
-    <button className="cf-submit-full" type="button" onClick={toResult}>Hitung Perbandingan →</button>
-   </div>
+     <button className="cf-submit-full" type="button" onClick={toResult}>Hitung Perbandingan →</button>
+    </div>
    
    {showModal&&<div className="modal-overlay" onClick={closeModal}>
      <div className="modal-content" onClick={e=>e.stopPropagation()}>
@@ -630,7 +641,7 @@ export default function Kalkulator(){
            <div className="reject-result-header">
              <span className="reject-rate-value">{rejectFormData.rejectRate.toFixed(1)}%</span>
              <span className={'reject-status '+(rejectFormData.rejectRate<=2?'efektif':'tidak-efektif')}>
-               {rejectFormData.rejectRate<=2?'✅ Efektif':'⚠️ Tidak Efektif'}
+                {rejectFormData.rejectRate<=2?'Efektif':'Tidak Efektif'}
              </span>
            </div>
            <div className="reject-impact">
@@ -653,7 +664,13 @@ export default function Kalkulator(){
      </div>
    </div>}
    
-    {hasCompared&&<section className="comparison-summary">
+      <div className="old-result-reject-action">
+      <button className="cf-reject-btn" type="button" onClick={openRejectModalStandalone}>
+       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11H7a2 2 0 01-2-2V7a2 2 0 012 2h2a2 2 0 012 2v2a2 2 0 01-2 2zM15 11h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM9 17H7a2 2 0 01-2-2v-2a2 2 0 012 2v2a2 2 0 01-2 2zM15 17h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+       Hitung Reject Rate
+      </button>
+      </div>
+      {hasCompared&&<section className="comparison-summary">
       <div className="summary-heading">
         <div>
           <span className="summary-kicker">Rangkuman hasil</span>
